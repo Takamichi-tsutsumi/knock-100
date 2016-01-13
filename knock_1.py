@@ -68,8 +68,30 @@ print template(12, "気温", 22.4)
 def cipher(string):
     new_string = ""
     for char in string:
-        if char.isalpha() && char.islower():
+        if char.isalpha() & char.islower():
             new_string += chr(219 - ord(char))
         else:
             new_string += char
+    return new_string
+
+print cipher("hello world")
+
+# 09 Typoglycemia
+import random
+
+string = "I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind ."
+words = []
+for word in string.split(" "):
+    # print word
+    if len(word) < 5:
+        words.append(word)
+    else:
+        new_word = [word[0]]
+        new_word.extend(random.sample(word[1:-1],len(word[1:-1])))
+        new_word.append(word[-1])
+        words.append("".join(new_word))
+print words
+
+print " ".join(words)
+
 
