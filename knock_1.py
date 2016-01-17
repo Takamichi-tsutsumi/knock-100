@@ -53,6 +53,24 @@ for i, word in enumerate(string.replace(",","").replace(".","").split(" ")):
 
 print elements
 
+# 05 n-gram
+def ngram(text, n):
+    ngram = []
+    if type(text) == str:
+        word_list = text.split(" ")
+        for i in range(0,len(word_list) - n + 1):
+            words = []
+            for j in range(0,n):
+                words.append(word_list[i + j])
+            ngram.append(words)
+    return ngram
+
+print ngram("I am an NLPer", 2)
+
+
+
+
+
 
 # 07 テンプレートによる文字生成
 
