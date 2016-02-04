@@ -35,7 +35,6 @@ int main(void)
             printf("何進数に変換しますか? (2 - 36) :");
             scanf("%d", &cd);
         } while (cd < 2 || cd > 36);
-
         dno = card_conv(no, cd, cno);
 
         for (i = dno - 1; i >= 0; i--)
