@@ -28,10 +28,13 @@ result = re.findall(media_regexp, text_en)
 re_standard = re.compile('\|(?P<key>\S+) = (?P<value>\S+)\\n')
 standard_data = re.findall(re_standard, text_en)
 print(standard_data)
-re_strong = re.compile("'+")
+re_strong = re.compile("'+")  # RE for strong tag
+re_inner_link = re.compile("(\[{2}|\|\S+\]{2}|\]{2})")
+
 standard_data_dict = dict(list(
     map(lambda
-        item: (item[0], re.sub(re_strong, '', item[1])), standard_data
-        )))
+        item: (item[0],
+               re.sub(re_inner_link, '', re.sub(re_strong, '', item[1]))),
+        standard_data)))
 
 print(standard_data_dict)
