@@ -19,10 +19,19 @@ result = re.findall(media_regexp, text_en)
 '''
 25.テンプレートの抽出
 基礎情報を辞書に格納。
+
+26.強調マークアップの除去
+27.内部リンクの除去
+28.MediaWikiマークアップの除去
 '''
 
 re_standard = re.compile('\|(?P<key>\S+) = (?P<value>\S+)\\n')
 standard_data = re.findall(re_standard, text_en)
 print(standard_data)
-standard_data_dict = dict(standard_data)
+re_strong = re.compile("'+")
+standard_data_dict = dict(list(
+    map(lambda
+        item: (item[0], re.sub(re_strong, '', item[1])), standard_data
+        )))
+
 print(standard_data_dict)
