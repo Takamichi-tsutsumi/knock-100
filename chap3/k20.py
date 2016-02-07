@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import re
 src = open('./jawiki-country.json', 'r')
 data = src.readlines()
 
@@ -11,5 +12,11 @@ for line in data:
         england = line_data['text']
 
 print(england)
+# regexp = re.compile(r'[[Category:' '\S+' r']]')
+regexp = re.compile('\[\[Category\:\S+\]\]')
+result = re.findall(regexp, england)
+
+if result:
+    print(result)
 
 src.close()
