@@ -13,10 +13,14 @@ for line in data:
 
 print(england)
 # regexp = re.compile(r'[[Category:' '\S+' r']]')
-regexp = re.compile('\[\[Category\:\S+\]\]')
+regexp = re.compile(
+    '(?P<prefix>\[\[Category\:)(?P<category>\S+)(?P<suffix>\]\])'
+)
 result = re.findall(regexp, england)
 
 if result:
-    print(result)
+    for line in result:
+        print(line[1])
+    # print(result)
 
 src.close()
