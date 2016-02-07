@@ -23,4 +23,13 @@ if result:
         print(line[1])
     # print(result)
 
+re_section = re.compile(
+        '(=+)(?P<section>\w+)(=+)'
+        )
+sections = re.findall(re_section, england)
+if sections:
+    for section in sections:
+        print(section[1], len(section[0]) - 1)
+
+
 src.close()
