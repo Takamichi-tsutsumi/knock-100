@@ -17,6 +17,33 @@ void *seqsearch(
   return NULL;
 }
 
+void *bin_search(
+    const void *key,
+    const void *base,
+    size_t nmemb,
+    size_t size,
+    int (*compar)(const void *, const void *))
+{
+  size_t pl = 0;
+  size_t pr = nmemb;
+  size_t pc;
+
+  while(pl < pr) {
+
+    pc = pl + (pr - pl)/2;
+    
+    if(compar(key, base + size * pc) == 0) {
+      return (void *) (base + size * pc);
+    } else if (compar(key, base + size * pc) == 1) {
+      pl = pc + 1;
+    } else {
+      pr = pc;
+    }
+
+  }
+  
+  return NULL;
+}
 
 
 
@@ -48,23 +75,30 @@ int main(void)
   long *x;
   long *p;
 
-  puts("bsearch関数による探索");
+  puts("bin_search関数による探索");
   printf("要素数 : ");
   scanf("%d", &nx);
   x = calloc(nx, sizeof(long));
   
-  printf("入力してください。\n");
+  printf("昇順に入力してください。\n");
   printf("x[0] : ");
   scanf("%ld", &x[0]);
+
   for (i = 1; i < nx; i++) {
-    printf("x[%d] : ", i);
-    scanf("%ld", &x[i]);
+
+    do {
+
+      printf("x[%d] : ", i);
+      scanf("%ld", &x[i]);
+
+    } while ( x[i] < x[i-1] );
+
   }
 
   printf("探す値 : ");
   scanf("%ld", &ky);
-  
-  p = seqsearch(
+
+  p = bin_search(
         &ky, 
         x, 
         nx, 
