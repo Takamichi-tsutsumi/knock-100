@@ -20,6 +20,29 @@ int bin_search(const int a[], int n, int key)
   return -1;
 }
 
+int bin_search2(const int a[], int n, int key)
+{
+  int pl, pr, pc;
+  pl = 0;
+  pr = n - 1;
+  do {
+    pc = (pl + pr)/2;
+    if (a[pc] == key)
+      while (1){
+        if (a[pc-1] != key)
+          return pc;
+        pc--;
+      }
+    else if (a[pc] > key)
+      pl = pc + 1;
+    else
+      pr = pc - 1;
+  } while(pl <= pr);
+
+  return -1;
+}
+
+
 int main(void)
 {
   int i, nx, ky, idx;
@@ -43,7 +66,7 @@ int main(void)
   printf("探す値");
   scanf("%d", &ky);
 
-  idx = bin_search(x, nx, ky);
+  idx = bin_search2(x, nx, ky);
   if (idx == -1)
     printf("探索に失敗しました。\n");
   else
