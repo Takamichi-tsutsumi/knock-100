@@ -1,6 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void *seqsearch(
+    const void *key, /* 比較する値 */
+    const void *base, /* 比較される配列 */
+    size_t nmemb, /* *baseのメンバ数 */
+    size_t size,  /* *baseの要素のsize */
+    int (*compar)(const void *, const void *)) /* 比較関数 */
+{
+  size_t i;
+  for (i = 0; i < nmemb; i++) {
+    if (compar(base + i * size, key) == 0) {
+      return (void *)(base + i * size);
+    }
+  }
+  return NULL;
+}
+
+
+
+
 int int_cmp(const int *a, const int *b)
 {
   if (*a > *b)
@@ -34,20 +53,18 @@ int main(void)
   scanf("%d", &nx);
   x = calloc(nx, sizeof(long));
   
-  printf("降順に入力してください。\n");
+  printf("入力してください。\n");
   printf("x[0] : ");
   scanf("%ld", &x[0]);
   for (i = 1; i < nx; i++) {
-    do {
-      printf("x[%d] : ", i);
-      scanf("%ld", &x[i]);
-    } while (x[i] > x[i-1]);
-   }
+    printf("x[%d] : ", i);
+    scanf("%ld", &x[i]);
+  }
 
   printf("探す値 : ");
   scanf("%ld", &ky);
   
-  p = bsearch(
+  p = seqsearch(
         &ky, 
         x, 
         nx, 
