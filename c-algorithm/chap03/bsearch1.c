@@ -45,6 +45,45 @@ void *bin_search(
   return NULL;
 }
 
+void *bsearchx(
+    const void *key,
+    const void *base,
+    size_t nmemb,
+    size_t size,
+    int (*compar)(const void *, const void *))
+{
+  size_t pl = 0;
+  size_t pr = nmemb;
+  size_t pc;
+
+  while(pl < pr) {
+
+    pc = pl + (pr - pl)/2;
+
+    if(compar(key, base + size * pc) == 0) {
+
+      while (compar(key, base + size * (pc - 1)) == 0) {
+        pc--;
+      }
+      return (void *) (base + size * pc);
+
+    } else if (compar(key, base + size * pc) == 1) {
+
+      pl = pc + 1;
+
+    } else {
+
+      pr = pc;
+
+    }
+
+  }
+
+
+  return NULL;
+}
+
+
 
 
 int int_cmp(const int *a, const int *b)
@@ -98,7 +137,7 @@ int main(void)
   printf("探す値 : ");
   scanf("%ld", &ky);
 
-  p = bin_search(
+  p = bsearchx(
         &ky, 
         x, 
         nx, 
